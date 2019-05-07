@@ -89,9 +89,17 @@ var getBadges = function (t) {
     .get('name')
     .then(function (cardName) {
       console.log('We just loaded the card name for fun: ' + cardName);
-      const regex = /TID [0-9]+/g
-      const ps_matches = regex.exec(cardName)
-      console.log('ps_matches', ps_matches)
+      let regex = /TID [0-9]+/g
+      const trip_matches = regex.exec(cardName)
+      console.log('trip_matches', trip_matches)
+
+      regex = /DID [0-9]+/g
+      const driver_matches = regex.exec(cardName)
+      console.log('driver_matches', driver_matches)
+
+      regex = /UID [0-9]+/g
+      const user_matches = regex.exec(cardName)
+      console.log('user_matches', user_matches)
 
       const badges = [
         //   {
@@ -129,27 +137,45 @@ var getBadges = function (t) {
               height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
             });
           }
-        }, {
-          // or for simpler use cases you can also provide a url
-          // when the user clicks on the card detail badge they will
-          // go to a new tab at that url
-          title: 'Test', // for detail badges only
-          text: 'URL',
-          icon: GRAY_ICON, // for card front badges only
-          url: 'https://trello.com/home',
-          target: 'Trello Landing Page' // optional target for above url
-        }];
-      console.log(`url https://backend.taxigo.com.tw/trip/${ps_matches[0].replace('TID', '').trim()}`)
-      if (ps_matches && ps_matches.length > 0 && ps_matches[0]) {
+        }
+      ];
+
+      if (trip_matches && trip_matches.length > 0 && trip_matches[0]) {
         badges.push({
           // or for simpler use cases you can also provide a url
           // when the user clicks on the card detail badge they will
           // go to a new tab at that url
-          title: 'Trip', // for detail badges only
-          text: 'URL',
+          title: 'Trip URL', // for detail badges only
+          text: 'Trip',
           icon: GRAY_ICON, // for card front badges only
-          url: `https://backend.taxigo.com.tw/trip/${ps_matches[0].replace('TID', '').trim()}`,
-          target: 'Trello Landing Page' // optional target for above url
+          url: `https://backend.taxigo.com.tw/trip/${trip_matches[0].replace('TID', '').trim()}`,
+          target: 'Trip Page' // optional target for above url
+        })
+      }
+
+      if (driver_matches && driver_matches.length > 0 && driver_matches[0]) {
+        badges.push({
+          // or for simpler use cases you can also provide a url
+          // when the user clicks on the card detail badge they will
+          // go to a new tab at that url
+          title: 'Driver URL', // for detail badges only
+          text: 'Driver',
+          icon: GRAY_ICON, // for card front badges only
+          url: `https://backend.taxigo.com.tw/driver_info/${driver_matches[0].replace('DID', '').trim()}`,
+          target: 'Driver Page' // optional target for above url
+        })
+      }
+
+      if (user_matches && user_matches.length > 0 && user_matches[0]) {
+        badges.push({
+          // or for simpler use cases you can also provide a url
+          // when the user clicks on the card detail badge they will
+          // go to a new tab at that url
+          title: 'User URL', // for detail badges only
+          text: 'User',
+          icon: GRAY_ICON, // for card front badges only
+          url: `https://backend.taxigo.com.tw/user_info/${user_matches[0].replace('UID', '').trim()}`,
+          target: 'User Page' // optional target for above url
         })
       }
       return badges
