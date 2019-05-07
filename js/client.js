@@ -133,13 +133,13 @@ var getBadges = function (t) {
           // or for simpler use cases you can also provide a url
           // when the user clicks on the card detail badge they will
           // go to a new tab at that url
-          title: 'URL Detail Badge', // for detail badges only
+          title: 'Test', // for detail badges only
           text: 'URL',
           icon: GRAY_ICON, // for card front badges only
           url: 'https://trello.com/home',
           target: 'Trello Landing Page' // optional target for above url
         }];
-
+      console.log(`url https://backend.taxigo.com.tw/trip/${ps_matches[0].replace('TID', '').trim()}`)
       if (ps_matches && ps_matches.length > 0 && ps_matches[0]) {
         badges.push({
           // or for simpler use cases you can also provide a url
