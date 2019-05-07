@@ -92,7 +92,8 @@ var getBadges = function (t) {
       const regex = /TID [0-9]+/g
       const ps_matches = regex.exec(cardName)
       console.log('ps_matches', ps_matches)
-      return [
+
+      const badges = [
         //   {
         //   // dynamic badges can have their function rerun after a set number
         //   // of seconds defined by refresh. Minimum of 10 seconds.
@@ -138,6 +139,21 @@ var getBadges = function (t) {
           url: 'https://trello.com/home',
           target: 'Trello Landing Page' // optional target for above url
         }];
+
+      if (ps_matches && ps_matches.length > 0 && ps_matches[0]) {
+        badges.push({
+          // or for simpler use cases you can also provide a url
+          // when the user clicks on the card detail badge they will
+          // go to a new tab at that url
+          title: 'Trip', // for detail badges only
+          text: 'URL',
+          icon: GRAY_ICON, // for card front badges only
+          url: `https://backend.taxigo.com.tw/trip/${ps_matches[0].replace('TID', '').trim()}`,
+          target: 'Trello Landing Page' // optional target for above url
+        })
+      }
+      return badges
+
     });
 };
 
